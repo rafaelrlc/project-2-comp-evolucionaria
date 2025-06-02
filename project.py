@@ -2,7 +2,16 @@ import random
 import itertools
 
 DAYS_OF_WEEK = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"]
-TIME_SLOTS = ["8:00-9:00", "9:00-10:00", "10:00-11:00", "11:00-12:00", "13:00-14:00", "14:00-15:00"] # Depois mudar para 50 minutos
+TIME_SLOTS = [
+    "7:30-8:20",   # M2
+    "9:20-10:10",  # M4
+    "11:10-12:00", # M6
+    "12:00-12:50", # T1
+    "13:30-14:20", # T2
+    "15:20-16:10", # T4
+    "16:10-17:00",  # T5
+    "17:10-18:00",  # T6
+]
 
 class Course:
     """Representa um curso com seu nome e o número de sessões semanais necessárias."""
@@ -307,32 +316,182 @@ class GeneticScheduler:
         print("\n---------------------------------")
 
 
-# --- Exemplo de Uso ---
 if __name__ == "__main__":
-    # 1. Define as matérias/cursos
-    alg_prog = Course("Algoritmos e Programação", 3)
-    est_dados = Course("Estruturas de Dados", 2)
-    bd_sistemas = Course("Banco de Dados", 2)
-    redes_comp = Course("Redes de Computadores", 3)
-    sist_oper = Course("Sistemas Operacionais", 2)
-    int_art = Course("Inteligência Artificial", 1)
-    comp_graf = Course("Computação Gráfica", 1)
+    all_courses = [
+        # 1º Período
+        Course("Programação 1", 4),
+        Course("Lógica para Computação", 4),
+        Course("Computação, Sociedade e Ética", 4),
+        Course("Matemática Discreta", 4),
+        Course("Cálculo Diferencial e Integral", 8),  # 144h
 
-    all_courses = [alg_prog, est_dados, bd_sistemas, redes_comp, sist_oper, int_art, comp_graf]
+        # 2º Período
+        Course("Estrutura de Dados", 4),
+        Course("Banco de Dados", 4),
+        Course("Organização e Arquitetura de Computadores", 4),
+        Course("Geometria Analítica", 4),
 
-    # 2. Define seus professores e os cursos que eles podem lecionar
-    prof_roberta = Teacher("Prof. Roberta", ["Algoritmos e Programação", "Estruturas de Dados"])
-    prof_bruno = Teacher("Prof. Bruno", ["Banco de Dados", "Redes de Computadores", "Inteligência Artificial"])
-    prof_rian = Teacher("Prof. Rian", ["Algoritmos e Programação", "Sistemas Operacionais"])
-    prof_tiago = Teacher("Prof. Tiago", ["Redes de Computadores", "Banco de Dados", "Computação Gráfica"])
-    prof_mario = Teacher("Prof. Mario", ["Estruturas de Dados", "Inteligência Artificial"])
+        # 3º Período
+        Course("Redes de Computadores", 4),
+        Course("Teoria dos Grafos", 4),
+        Course("Probabilidade e Estatística", 4),
+        Course("Álgebra Linear", 4),
 
-    all_teachers = [prof_roberta, prof_bruno, prof_rian, prof_tiago, prof_mario]
+        # 4º Período
+        Course("Programação 2", 4),
+        Course("Programação 3", 4),
+        Course("Projeto e Análise de Algoritmos", 4),
+        Course("Teoria da Computação", 4),
+
+        # 5º Período
+        Course("Sistemas Operacionais", 4),
+        Course("Compiladores", 4),
+        Course("Inteligência Artificial", 4),
+        Course("Computação Gráfica", 4),
+
+        # 6º Período
+        Course("Projeto e Desenvolvimento de Sistemas", 16),  # 288h
+
+        # 7º Período
+        Course("Metodologia de Pesquisa e Trabalho Individual", 4),
+        Course("Noções de Direito", 4),
+
+        # Ênfases 
+        Course("Cálculo 3", 4),
+        Course("Conceitos de Linguagem de Programação", 4),
+        Course("Aprendizagem de Máquina", 4),
+        Course("Sistemas Digitais", 4),
+        Course("Sistemas Distribuídos", 4),
+        Course("Redes Neurais e Aprendizado Profundo", 4),
+        Course("FPGA", 4),
+        Course("Interação Homem-Máquina", 4),
+        Course("Processamento Digital de Imagens", 4),
+        Course("Computação Evolucionária", 4),
+        Course("Sistemas Embarcados", 4),
+        Course("Gerência de Projeto", 4),
+        Course("Visão Computacional", 4),
+        Course("Ciência de Dados", 4),
+        Course("Microcontroladores e Aplicações", 4),
+        Course("Segurança de Sistemas Computacionais", 4),
+        Course("Pesquisa Operacional", 4),
+    ]
+
+    # 2. Define os professores em uma lista, relacionando apenas aos cursos existentes em all_courses
+    all_teachers = [
+        Teacher("Almir Pereira Guimarães", [
+            "Redes de Computadores", "Sistemas Distribuídos"
+        ]),
+        Teacher("André Luiz Lins de Aquino", [
+            "Redes de Computadores", "Projeto e Análise de Algoritmos"
+        ]),
+        Teacher("Arturo Hernández Domínguez", [
+            "Programação 3", "Projeto e Teoria de Linguagens", "Engenharia de Software", "Compiladores"
+        ]),
+        Teacher("Aydano Pamponet Machado", [
+            "Aprendizagem de Máquina", "Inteligência Artificial", "Introdução à Computação"
+        ]),
+        Teacher("Baldoino Fonseca dos Santos Neto", [
+            "Programação 2", "Lógica para Computação", "Sistemas Digitais", "Inteligência Artificial"
+        ]),
+        Teacher("Bruno Almeida Pimentel", [
+            "Inteligência Artificial", "Aprendizagem de Máquina"
+        ]),
+        Teacher("Bruno Costa e Silva Nogueira", [
+            "Organização e Arquitetura de Computadores", "Pesquisa Operacional"
+        ]),
+        Teacher("Cid Cavalcanti de Albuquerque", [
+            "Noções de Direito", "Introdução à Computação"
+        ]),
+        Teacher("Davi Bibiano Brito", [
+            "Sistemas Digitais"
+        ]),
+        Teacher("Erick de Andrade Barboza", [
+            "Organização e Arquitetura de Computadores", "Microcontroladores e Aplicações"
+        ]),
+        Teacher("Evandro de Barros Costa", [
+            "Inteligência Artificial",
+        ]),
+        Teacher("Fábio José Coutinho da Silva", [
+            "Banco de Dados", "Sistemas Distribuídos", "Ciência de Dados", "Conceitos de Linguagem de Programação"
+        ]),
+        Teacher("Fábio Paraguaçu Duarte da Costa", [
+            "Lógica para Computação", "Teoria da Computação", "Inteligência Artificial", "Interação Homem-Máquina"
+        ]),
+        Teacher("Glauber Rodrigues Leite", [
+           "Álgebra Linear"
+        ]),
+        Teacher("Ig Ibert Bittencourt Santana Pinto", [
+            "Introdução à Computação"
+        ]),
+        Teacher("Leandro Dias da Silva", [
+            "Sistemas Operacionais", "Redes de Computadores", "Sistemas Embarcados"
+        ]),
+        Teacher("Leandro Melo de Sales", [
+            "Redes de Computadores", "Sistemas Operacionais", "Sistemas Distribuídos"
+        ]),
+        Teacher("Marcelo Costa Oliveira", [
+            "Processamento Digital de Imagens", "Computação Gráfica", "Ciência de Dados"
+        ]),
+        Teacher("Márcio de Medeiros Ribeiro", [
+            "Estrutura de Dados"
+        ]),
+        Teacher("Mário Hozano Lucas de Souza", [
+            "Programação 3"
+        ]),
+        Teacher("Petrúcio Antônio Medeiros Barros", [
+           "Probabilidade e Estatística", "Computação, Sociedade e Ética"
+        ]),
+        Teacher("Ranilson Oscar Araújo Paiva", [
+          "Programação 3", "Projeto e Desenvolvimento de Sistemas", "Programação 1"
+        ]),
+        Teacher("Rafael de Amorim Silva", [
+            "Gerência de Projeto", "Computação, Sociedade e Ética", "Introdução à Computação", "Conceitos de Linguagem de Programação"
+        ]),
+        Teacher("Rian Gabriel Santos Pinheiro", [
+            "Projeto e Análise de Algoritmos", "Teoria dos Grafos", "Pesquisa Operacional", "Teoria da Computação"
+        ]),
+        Teacher("Roberta Vilhena Vieira Lopes", [
+            "Projeto e Teoria de Linguagens", "Introdução à Computação", "Computação Evolucionária"
+        ]),
+        Teacher("Rodrigo de Barros Paes", [
+            "Programação 1", "Programação 3", "Projeto e Desenvolvimento de Sistemas"
+        ]),
+        Teacher("Thales Miranda de Almeida Vieira", [
+            "Aprendizagem de Máquina", "Redes Neurais e Aprendizado Profundo", "Visão Computacional"
+        ]),
+        Teacher("Tiago Alves de Almeida", [
+            "Cálculo Diferencial e Integral", "Geometria Analítica"
+        ]),
+        Teacher("Xu Yang", [
+            "Cálculo Diferencial e Integral", "Teoria dos Grafos"
+        ]),
+        Teacher("Willy Carvalho Tiengo", [
+            "Sistemas Operacionais", "Engenharia de Software", "Redes de Computadores", "Projeto e Desenvolvimento de Sistemas"
+        ]),
+        Teacher("LUCAS BENEVIDES VIANA DE AMORIM", [
+            "Organização e Arquitetura de Computadores", 
+        ]),
+        Teacher("TIAGO FIGUEIREDO VIEIRA", [
+            "Redes Neurais e Aprendizado Profundo", "Processamento Digital de Imagens"
+        ]),
+        Teacher("MARIA CRISTINA TENORIO CAVALCANTE ESCARPINI", [
+            "Banco de Dados", "Computação Evolucionária", 
+        ]),
+    ]
+
+    cursos_primeiros_4_periodos = [
+        c.name for c in all_courses[:17] 
+    ]
+
+    # Adiciona cursos dos primeiros 4 períodos a todos os professores
+    for prof in all_teachers:
+        prof.courses_can_teach = list(set(prof.courses_can_teach) | set(cursos_primeiros_4_periodos))
 
     # 3. Define suas salas
     sala_1 = Room("Sala 1", 30)
-    sala_2 = Room("Sala 2", 25)
-    lab_1 = Room("Laboratório 1", 20)
+    sala_2 = Room("Sala 2", 30)
+    lab_1 = Room("Laboratório 1", 65)
+    lab_2 = Room("Laboratório 2", 35)
     auditorio = Room("Auditório", 50)
 
     all_rooms = [sala_1, sala_2, lab_1, auditorio]
